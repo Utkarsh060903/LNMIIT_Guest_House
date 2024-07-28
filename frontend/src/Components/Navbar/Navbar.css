@@ -1,0 +1,117 @@
+/* Global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navbar styles */
+.navbar {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  font-family: "Outfit", sans-serif;
+  background-color: transparent;
+  z-index: 100;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: blue;
+}
+
+.navbar .logo img {
+  padding-bottom: 10px;
+  width: 200px; /* Adjusted width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 20px; /* Adjusted gap */
+  color: black;
+  font-size: 18px;
+  justify-content: center;
+  margin-right: 20px; /* Adjusted margin */
+  position: relative;
+  font-weight: 500;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-menu a {
+  padding-bottom: 20px;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-menu a:hover {
+  cursor: pointer;
+  color: #424242;
+}
+
+/* Login button container */
+.navbar .login-btn {
+  display: flex;
+  gap: 10px; /* Adjusted gap */
+  margin-right: 20px; /* Adjusted margin */
+}
+
+/* Buttons inside the navbar */
+.login-btn button {
+  height: 40px;
+  width: 120px; /* Adjusted width */
+  border-radius: 15px;
+  padding: 10px;
+  border: none;
+  background-color: #ff6347; /* Add a background color for better visibility */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.login-btn button:hover {
+  background-color: #e5533c;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 30px;
+  height: 3px;
+  background-color: black;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px; /* Adjusted padding for smaller screens */
+  }
+  
+  .navbar .logo img {
+    width: 150px; /* Adjusted width */
+  }
+
+  .navbar-menu {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .login-btn {
+    margin-right: 10px; /* Adjusted margin for smaller screens */
+  }
+
+  .login-btn button {
+    width: 100px; /* Adjusted width for smaller screens */
+  }
+}
