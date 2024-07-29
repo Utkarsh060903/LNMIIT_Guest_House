@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import './Register.css';
+import axios from 'axios';
 
-const emailPattern = /^(21|22|23|24|25)(cce|dcs|cse|ece|dce|me)[0-9]{3}@lnmiit\.ac\.in$/;
+const emailPattern = /^(21|22|23|24|25)(|dcs|ucs|uec|dce|ume|ucc)[0-9]{3}@lnmiit\.ac\.in$/;
 
 const Register = () => {
   const [form] = Form.useForm();
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
 
   const onFinish = (values) => {
     setErrorMessage('');
@@ -15,7 +22,23 @@ const Register = () => {
       setErrorMessage('Invalid email format. Please follow the specified format.');
       return;
     }
-    // Handle registration logic here
+    setData(values);
+    onRegister(values);
+  };
+
+  const onRegister = async (formData) => {
+    const url = "http://localhost:4001/api/user/register";
+
+    try {
+      const response = await axios.post(url, formData);
+      if (response.data.success) {
+        alert("Data registered successfully");
+      } else {
+        console.error("Server error:", response.data);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (

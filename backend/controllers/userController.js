@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
+import { sendEmail } from "../controllers/nodeMailerController.js"
 
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET);
@@ -20,7 +21,7 @@ const login = async (req, res) => {
         res.json({ success: false, message: "invalid credentials" });
       }
       const token = createToken(user._id);
-      res.json({ success: true, token });
+      res.json({ success: true, token ,  name: user.name});
     } catch (error) {
       console.log(error);
       res.json({ success: false, mesage: "error" });
@@ -54,6 +55,12 @@ const register = async (req, res) => {
       });
       const user = await newUser.save();
       const token = createToken(user._id);
+      sendEmail(
+        user.email,
+        'Welcome to Our Service',
+        `Hi ${user.name},\n\nThank you for registering with us.\n\nBest regards,\nYour Company`
+      );
+  
       res.json({ success: true, token });
     } catch (error) {
       console.log(error);

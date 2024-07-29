@@ -5,6 +5,7 @@ import cors from 'cors'
 import userRouter from './routes/userRoute.js';
 import formRouter from './routes/formRoute.js';
 import dotenv from 'dotenv'
+import getInfoRouter from './routes/getInfoRoute.js';
 const app = express()
 
 dotenv.config();
@@ -16,6 +17,9 @@ app.use(cors())
 
 app.use('/api/user' , userRouter)
 app.use('/api' , formRouter)
+app.use('/api' , getInfoRouter)
+
+app.use('/uploads', express.static('uploads'));
 
 connectDB();
 

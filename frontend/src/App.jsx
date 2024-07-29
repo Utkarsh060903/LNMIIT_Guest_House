@@ -7,9 +7,11 @@ import Availability from './Pages/Availability/Availability'
 import AboutUs from './Pages/AboutUs/AboutUs'
 import Login from './Components/Login/Login'
 import Register from './Components/Register/Register'
+import { UserProvider } from './UserContext'
 
 const App = () => {
   return (
+    <UserProvider>
     <div className='app'>
       <Navbar />
       <Routes>
@@ -21,6 +23,7 @@ const App = () => {
         <Route path='/register' element={<Register />} />
       </Routes>
     </div>
+    </UserProvider>
   )
 }
 

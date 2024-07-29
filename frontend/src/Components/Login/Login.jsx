@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Input, Button, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
+import { UserContext } from '../../UserContext';
+import axios from 'axios';
 
-const emailPattern = /^(21|22|23|24|25)(cce|dcs|cse|ece|dce|me)[0-9]{3}@lnmiit\.ac\.in$/;
+const emailPattern = /^(21|22|23|24|25)(ucc|dcs|ucs|dce|uec|ume)[0-9]{3}@lnmiit\.ac\.in$/;
 
-const Login= () => {
+const Login = () => {
   const [form] = Form.useForm();
   const [errorMessage, setErrorMessage] = useState('');
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const onFinish = (values) => {
     setErrorMessage('');
@@ -15,10 +19,26 @@ const Login= () => {
       setErrorMessage('Invalid email format. Please follow the specified format.');
       return;
     }
-    // Handle login logic here
+    onLogin(values);
   };
 
-  const navigate = useNavigate();
+  const onLogin = async (formData) => {
+    const url = "http://localhost:4001/api/user/login";
+
+    try {
+      const response = await axios.post(url, formData);
+      if (response.data.success) {
+        setUser({ name: response.data.name }); 
+        navigate('/form');
+      } else {
+        console.error("Server error:", response.data);
+        setErrorMessage(response.data.message || 'Login failed.');
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setErrorMessage('Login failed. Please try again.');
+    }
+  };
 
   return (
     <div className="login-container">
@@ -42,7 +62,7 @@ const Login= () => {
           <Input.Password placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button onClick={() => navigate('/form')} type="primary" htmlType="submit" className="login-button">
+          <Button type="primary" htmlType="submit" className="login-button">
             Login
           </Button>
         </Form.Item>

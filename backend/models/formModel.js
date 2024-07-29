@@ -32,12 +32,12 @@ const formSchema = new mongoose.Schema({
     },
 
     arrivalDate: {
-        type: Date,
+        type: String,  
         required: true
     },
 
     departureDate: {
-        type: Date,
+        type: String,  
         required: true
     },
 
