@@ -5,7 +5,7 @@ import validator from "validator";
 import { sendEmail } from "../controllers/nodeMailerController.js"
 
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET);
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '3d' });
     console.log('JWT_SECRET:', process.env.JWT_SECRET);
 };
 

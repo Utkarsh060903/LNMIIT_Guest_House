@@ -1,9 +1,11 @@
+// Login.js
 import React, { useState, useContext } from 'react';
 import { Form, Input, Button, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { UserContext } from '../../UserContext';
 import axios from 'axios';
+import { setTokenWithExpiry } from '../../Utils/tokenUtils.js';
 
 const emailPattern = /^(21|22|23|24|25)(ucc|dcs|ucs|dce|uec|ume)[0-9]{3}@lnmiit\.ac\.in$/;
 
@@ -28,7 +30,9 @@ const Login = () => {
     try {
       const response = await axios.post(url, formData);
       if (response.data.success) {
-        setUser({ name: response.data.name }); 
+        const { token, name } = response.data;
+        setTokenWithExpiry(token, name, 3); // Set token for 3 days
+        setUser({ name }); 
         navigate('/form');
       } else {
         console.error("Server error:", response.data);

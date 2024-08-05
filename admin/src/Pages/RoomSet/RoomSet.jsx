@@ -1,0 +1,111 @@
+import React, { useState, useEffect } from "react";
+import "./RoomSet.css";
+
+const RoomSet = () => {
+  const [selectedDate, setSelectedDate] = useState("");
+  const [availability, setAvailability] = useState({});
+
+  useEffect(() => {
+    if (selectedDate) {
+      const storedAvailability = JSON.parse(localStorage.getItem(selectedDate));
+      if (storedAvailability) {
+        setAvailability(storedAvailability);
+      } else {
+        setAvailability({});
+      }
+    }
+  }, [selectedDate]);
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handleAvailabilityChange = (room, type) => {
+    setAvailability((prevAvailability) => {
+      const updatedRoomAvailability = prevAvailability[room] || { available: false, notAvailable: false };
+      const updatedAvailability = {
+        ...prevAvailability,
+        [room]: {
+          ...updatedRoomAvailability,
+          [type]: !updatedRoomAvailability[type],
+        },
+      };
+      return updatedAvailability;
+    });
+  };
+
+  const handleSave = () => {
+    localStorage.setItem(selectedDate, JSON.stringify(availability));
+  };
+
+  const getAvailabilityCounts = () => {
+    let availableCount = 0;
+    let notAvailableCount = 0;
+
+    for (const room in availability) {
+      if (availability[room].available) {
+        availableCount++;
+      }
+      if (availability[room].notAvailable) {
+        notAvailableCount++;
+      }
+    }
+
+    return { availableCount, notAvailableCount };
+  };
+
+  const { availableCount, notAvailableCount } = getAvailabilityCounts();
+
+  return (
+    <div className="roomset">
+      <div className="main">
+        <div className="controls">
+          <div className="date-picker">
+            <label htmlFor="availability-date">Set Availability Date</label>
+            <input
+              type="date"
+              id="availability-date"
+              name="availability-date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+          </div>
+          <div className="save-button">
+            <button className="save-button" onClick={handleSave}>Save</button>
+          </div>
+        </div>
+        <div className="counts">
+          <p>Total Available Rooms: {availableCount}</p>
+          <p>Total Non-Available Rooms: {notAvailableCount}</p>
+        </div>
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((room) => (
+          <div className="card" key={room}>
+            <h2 className="room-text">ROOM {room}</h2>
+            <div className="availability">
+              <label htmlFor={`available${room}`}>Available</label>
+              <input
+                type="checkbox"
+                name={`available${room}`}
+                id={`available${room}`}
+                checked={availability[`room${room}`]?.available || false}
+                onChange={() => handleAvailabilityChange(`room${room}`, "available")}
+              />
+            </div>
+            <div className="non-availability">
+              <label htmlFor={`notAvailable${room}`}>Not Available</label>
+              <input
+                type="checkbox"
+                name={`notAvailable${room}`}
+                id={`notAvailable${room}`}
+                checked={availability[`room${room}`]?.notAvailable || false}
+                onChange={() => handleAvailabilityChange(`room${room}`, "notAvailable")}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default RoomSet;

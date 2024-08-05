@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+// Navbar.js
+import React, { useState, useContext, useEffect } from 'react';
 import './Navbar.css';
 import { assets } from '../../assets/assets';
 import { HashLink as Link } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../UserContext';
+import { setTokenWithExpiry, getToken } from '../../Utils/tokenUtils.js';
 
 const Navbar = () => {
   const scrollToSection = (id) => {
@@ -11,12 +13,25 @@ const Navbar = () => {
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const tokenData = getToken();
+    if (tokenData) {
+      setUser({ name: tokenData.name });
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setUser(null); // Assuming you have a setter for user in context
+    navigate('/');
+  }
 
   return (
     <div className='navbar'>
@@ -36,6 +51,7 @@ const Navbar = () => {
           <>
             <button onClick={() => navigate('/form')}>Book</button>
             <button>{user.name}</button>
+            <button onClick={logOut}>Logout</button>
           </>
         ) : (
           <button onClick={() => navigate('/login')}>Login</button>
