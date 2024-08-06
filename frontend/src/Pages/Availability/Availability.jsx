@@ -87,8 +87,12 @@ const getListData = (value) => {
   const dateKey = value.format('YYYY-MM-DD');
   const storedAvailability = JSON.parse(localStorage.getItem(dateKey)) || {};
 
+  console.log(`Data for ${dateKey}:`, storedAvailability);
+
   const availableCount = Object.values(storedAvailability).filter(room => room.available).length;
   const notAvailableCount = Object.values(storedAvailability).filter(room => room.notAvailable).length;
+
+  console.log(`Available: ${availableCount}, Not Available: ${notAvailableCount}`);
 
   const listData = [];
   if (availableCount > 0) {
