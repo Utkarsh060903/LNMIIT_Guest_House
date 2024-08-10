@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "./RoomSet.css";
 
 const RoomSet = () => {
@@ -7,12 +8,15 @@ const RoomSet = () => {
 
   useEffect(() => {
     if (selectedDate) {
-      const storedAvailability = JSON.parse(localStorage.getItem(selectedDate));
-      if (storedAvailability) {
-        setAvailability(storedAvailability);
-      } else {
-        setAvailability({});
-      }
+      // Fetch availability data from the database for the selected date
+      axios.get(`http://localhost:4001/api/availability-range?startDate=${selectedDate}&endDate=${selectedDate}`)
+        .then(response => {
+          const storedAvailability = response.data[0]?.availability || {};
+          setAvailability(storedAvailability);
+        })
+        .catch(error => {
+          console.error("Error fetching availability data:", error);
+        });
     }
   }, [selectedDate]);
 
@@ -35,7 +39,19 @@ const RoomSet = () => {
   };
 
   const handleSave = () => {
-    localStorage.setItem(selectedDate, JSON.stringify(availability));
+    const data = {
+      date: selectedDate,
+      availability: availability,
+    };
+
+    // Store availability data in the database
+    axios.post("http://localhost:4001/api/store-availability", data)
+  .then(response => {
+    console.log("Availability data saved successfully:", response.data);
+  })
+  .catch(error => {
+    console.error("Error saving availability data:", error);
+  });
   };
 
   const getAvailabilityCounts = () => {

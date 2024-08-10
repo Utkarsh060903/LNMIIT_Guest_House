@@ -1,35 +1,45 @@
-// Navbar.js
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import './Navbar.css';
 import { assets } from '../../assets/assets';
 import { HashLink as Link } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../UserContext';
-import { setTokenWithExpiry, getToken } from '../../Utils/tokenUtils.js';
+import { getToken } from '../../Utils/tokenUtils.js';
 
 const Navbar = () => {
-  const scrollToSection = (id) => {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  };
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
+    useEffect(() => {
     const tokenData = getToken();
     if (tokenData) {
       setUser({ name: tokenData.name });
     }
   }, []);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogin = (role) => {
+    setIsDropdownOpen(false); // Close the dropdown after selecting
+    if (role === 'student') {
+      navigate('/login/student');
+    } else if (role === 'faculty') {
+      navigate('/login/faculty');
+    }
+  };
+
   const logOut = () => {
     localStorage.removeItem("token");
-    setUser(null); // Assuming you have a setter for user in context
+    setUser(null);
     navigate('/');
   }
 
@@ -43,7 +53,7 @@ const Navbar = () => {
         <li><Link smooth to='/#availability'>Availability</Link></li>
         <li><Link smooth to='/#aboutus'>About Us</Link></li>
         <li><Link to='/contactus'>Contact us</Link></li>
-        <a onClick={() => scrollToSection('about-us')}>Location</a>
+        <li><Link smooth to='/#availability'>Location</Link></li>
       </ul>
 
       <div className="login-btn">
@@ -54,7 +64,15 @@ const Navbar = () => {
             <button onClick={logOut}>Logout</button>
           </>
         ) : (
-          <button onClick={() => navigate('/login')}>Login</button>
+          <div className="dropdown">
+            <button onClick={toggleDropdown}>Login</button>
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                <button onClick={() => handleLogin('student')}>Student</button>
+                <button onClick={() => handleLogin('faculty')}>Faculty</button>
+              </div>
+            )}
+          </div>
         )}
       </div>
 

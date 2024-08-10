@@ -1,13 +1,14 @@
-// src/utils/tokenUtils.js
+import * as jwtDecode from 'jwt-decode'
 
-export const setTokenWithExpiry = (token, name, days) => {
+export const setTokenWithExpiry = (token, days) => {
     const now = new Date();
-    const expiryDate = now.getTime() + days * 24 * 60 * 60 * 1000;
+    const expiryDate = now.getTime() + days * 24 * 60 * 60 * 1000
+
     const tokenObject = {
       value: token,
-      name: name,
-      expiry: expiryDate
+      expiry: expiryDate,
     };
+
     localStorage.setItem('token', JSON.stringify(tokenObject));
   };
   
@@ -21,6 +22,6 @@ export const setTokenWithExpiry = (token, name, days) => {
       return null;
     }
   
-    return tokenObject;
+    const decodedToken = jwtDecode.default(tokenObject.value);
+    return { token: tokenObject.value, name: decodedToken.name };
   };
-  

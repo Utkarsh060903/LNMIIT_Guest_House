@@ -1,154 +1,164 @@
-/* Container styling */
 .availability-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #1F1F1F;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #fff;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1F1F1F;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Heading styling */
+.availability-heading {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+/* Calendar styling */
+.ant-picker-calendar {
+  width: 100%;
+  max-width: 1200px; /* Adjust this value based on your preference */
+  border-radius: 8px;
+  background-color: #2b2b2b;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+/* Event list styling */
+.events {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.events li {
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+/* Badge styling */
+.ant-badge-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.ant-badge-status-warning {
+  background: #faad14;
+  color: #fff;
+}
+
+.ant-badge-status-success {
+  background: #52c41a;
+  color: #fff;
+}
+
+.ant-badge-status-error {
+  background: #f5222d;
+  color: #fff;
+}
+
+/* General typography */
+body, p, ul, h2 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  color: #fff;
+}
+
+/* Section styling */
+#aboutus {
+  padding: 80px 0;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  background-color: #1F1F1F;
+  color: #fff;
+}
+
+.s-title {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.s-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Utility classes */
+.tet {
+  line-height: 2;
+  margin-bottom: 1rem;
+}
+
+/* Row styling */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1.5rem 0 0 -0.75rem;
+}
+
+.row > * {
+  padding: 0.75rem;
+}
+
+/* List styling */
+ul {
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+.ctr {
+  margin: 0 105px;
+  padding: 10px 12px;
+  background-color: #2b2b2b;
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .availability-container {
+    padding: 15px;
   }
-  
-  /* Heading styling */
+
   .availability-heading {
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #fff;
+    font-size: 28px;
   }
-  
-  /* Calendar styling */
+
   .ant-picker-calendar {
-    border-radius: 8px;
-    background-color: #2b2b2b;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #fff;
-  }
-  
-  /* Event list styling */
-  .events {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .events li {
-    margin-bottom: 5px;
-    color: #fff;
-  }
-  
-  /* Badge styling */
-  .ant-badge-status {
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .ant-badge-status-warning {
-    background: #faad14;
-    color: #fff;
-  }
-  
-  .ant-badge-status-success {
-    background: #52c41a;
-    color: #fff;
-  }
-  
-  .ant-badge-status-error {
-    background: #f5222d;
-    color: #fff;
-  }
-  
-  /* General typography */
-  body, p, ul, h2 {
-    margin: 0;
-    padding: 0;
-    font-family: 'Outfit', sans-serif;
-    color: #fff;
-  }
-  
-  /* Section styling */
-  #aboutus {
-    padding: 80px 0;
-    overflow: hidden;
-    display: block;
     width: 100%;
-    background-color: #1F1F1F;
-    color: #fff;
   }
-  
-  .s-title {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px;
+
+  #aboutus {
+    padding: 60px 20px;
   }
-  
+
   .s-title h2 {
-    font-size: 32px;
-    font-weight: bold;
-    color: #fff;
+    font-size: 28px;
   }
-  
-  /* Utility classes */
-  .tet {
-    line-height: 2;
-    margin-bottom: 1rem;
-  }
-  
-  /* Row styling */
+
   .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -1.5rem 0 0 -0.75rem;
+    flex-direction: column;
+    margin: 0;
   }
-  
-  .row > * {
-    padding: 0.75rem;
-  }
-  
-  /* List styling */
-  ul {
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    padding-inline-start: 40px;
-  }
-  
+
   .ctr {
-    margin: 0 105px;
-    padding: 10px 12px;
-    background-color: #2b2b2b;
-    border-radius: 8px;
-    color: #fff;
+    margin: 20px auto;
+    padding: 10px;
   }
-  
-  /* Media queries for responsiveness */
-  @media (max-width: 768px) {
-    .availability-container {
-      padding: 15px;
-    }
-    
-    .availability-heading {
-      font-size: 28px;
-    }
-    
-    #aboutus {
-      padding: 60px 20px;
-    }
-    
-    .s-title h2 {
-      font-size: 28px;
-    }
-    
-    .row {
-      flex-direction: column;
-      margin: 0;
-    }
-    
-    .ctr {
-      margin: 20px auto;
-      padding: 10px;
-    }
-  }
-  
+}

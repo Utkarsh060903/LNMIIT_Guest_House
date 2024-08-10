@@ -7,6 +7,8 @@ import formRouter from './routes/formRoute.js';
 import dotenv from 'dotenv'
 import getInfoRouter from './routes/getInfoRoute.js';
 import forgotPassRouter from './routes/forgotPasswordRoute.js';
+import facultyformRouter from './routes/facultyFomRouter.js';
+import roomAvailabilityRouter from './routes/roomAvailabilityRoute.js';
 const app = express()
 
 dotenv.config();
@@ -18,11 +20,11 @@ app.use(cors())
 
 app.use('/api/user' , userRouter)
 app.use('/api' , formRouter)
+app.use('/api' , facultyformRouter)
 app.use('/api' , getInfoRouter)
-
 app.use('/api' , forgotPassRouter)
-
 app.use('/uploads', express.static('uploads'));
+app.use('/api' , roomAvailabilityRouter)
 
 connectDB();
 

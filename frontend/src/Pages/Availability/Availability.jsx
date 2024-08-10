@@ -77,37 +77,78 @@
 // };
 
 // export default Availability;
-
-
-import React from 'react';
-import { Badge, Calendar } from 'antd';
+import { useEffect, useState } from 'react';
+import { Badge, Calendar, Spin, message } from 'antd';
+import axios from 'axios';
+import moment from 'moment';
 import "./Availability.css";
 
-const getListData = (value) => {
-  const dateKey = value.format('YYYY-MM-DD');
-  const storedAvailability = JSON.parse(localStorage.getItem(dateKey)) || {};
-
-  console.log(`Data for ${dateKey}:`, storedAvailability);
-
-  const availableCount = Object.values(storedAvailability).filter(room => room.available).length;
-  const notAvailableCount = Object.values(storedAvailability).filter(room => room.notAvailable).length;
-
-  console.log(`Available: ${availableCount}, Not Available: ${notAvailableCount}`);
-
-  const listData = [];
-  if (availableCount > 0) {
-    listData.push({ type: 'warning', content: `${availableCount} Available` });
-  }
-  if (notAvailableCount > 0) {
-    listData.push({ type: 'error', content: `${notAvailableCount} Not Available` });
-  }
-
-  return listData;
-};
-
 const Availability = () => {
+  const [availabilityData, setAvailabilityData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const fetchAvailabilityData = async (monthMoment) => {
+    setLoading(true);
+    const startDate = monthMoment.startOf('month').format('YYYY-MM-DD');
+    const endDate = monthMoment.endOf('month').format('YYYY-MM-DD');
+  
+    try {
+      const response = await axios.get('/api/availability-range', {
+        params: {
+          startDate,
+          endDate,
+        },
+      });
+  
+      const data = {};
+      const availabilityEntries = response.data.message?.roomAvailabilities || [];
+  
+      availabilityEntries.forEach(({ date, availability }) => {
+        data[date] = availability;
+      });
+  
+      setAvailabilityData(data);
+    } catch (error) {
+      console.error('Error fetching availability data:', error);
+      message.error('Failed to fetch availability data.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const currentMonth = moment();
+    fetchAvailabilityData(currentMonth);
+  }, []);
+
+  const onPanelChange = (value) => {
+    fetchAvailabilityData(value);
+  };
+
   const dateCellRender = (value) => {
-    const listData = getListData(value);
+    const dateKey = value.format('YYYY-MM-DD');
+    const storedAvailability = availabilityData[dateKey] || {};
+
+    let availableCount = 0;
+    let notAvailableCount = 0;
+
+    for (const room in storedAvailability) {
+      if (storedAvailability[room].available) {
+        availableCount++;
+      }
+      if (storedAvailability[room].notAvailable) {
+        notAvailableCount++;
+      }
+    }
+
+    const listData = [];
+    if (availableCount > 0) {
+      listData.push({ type: 'success', content: `Available: ${availableCount}` });
+    }
+    if (notAvailableCount > 0) {
+      listData.push({ type: 'error', content: `Not Available: ${notAvailableCount}` });
+    }
+
     return (
       <ul className="events">
         {listData.map((item) => (
@@ -119,17 +160,19 @@ const Availability = () => {
     );
   };
 
-  const cellRender = (current, info) => {
-    if (info.type === 'date') return dateCellRender(current);
-    return info.originNode;
-  };
-
   return (
     <div className="availability-container">
       <h2 className="availability-heading">Availability</h2>
-      <Calendar cellRender={cellRender} />
+      {loading ? (
+        <div className="spinner-container">
+          <Spin tip="Loading..." />
+        </div>
+      ) : (
+        <Calendar cellRender={dateCellRender} onPanelChange={onPanelChange} />
+      )}
     </div>
   );
 };
 
 export default Availability;
+

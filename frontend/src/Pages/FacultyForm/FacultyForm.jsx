@@ -1,13 +1,12 @@
-import React, { useState , useEffect } from 'react';
-import './Form.css';
+import { useState , useEffect } from 'react';
+import './FacultyForm.css';
 import axios from 'axios';
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Form = () => {
+const FacultyForm = () => {
 
   useEffect(() => {
     gsap.to(".navbar", {
@@ -26,7 +25,7 @@ const Form = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    rollno: '',
+    employeeId: '',
     department: '',
     phoneno: '',
     photo: null,
@@ -47,10 +46,10 @@ const Form = () => {
 
   const onFormSubmit = async (event) => {
     event.preventDefault();
-    const url = 'http://localhost:4001/api/form';
+    const url = 'http://localhost:4001/api/facultyform';
     const data = new FormData();
     data.append('name', formData.name);
-    data.append('rollno', formData.rollno);
+    data.append('employeeId', formData.rollno);
     data.append('department', formData.department);
     data.append('phoneno', formData.phoneno);
     data.append('photo', formData.photo);
@@ -79,10 +78,10 @@ const Form = () => {
 
   return (
     <div className="form-container">
-      <h2>Student Information</h2>
+      <h2>Faculty Information</h2>
       <form onSubmit={onFormSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Student's Name:</label>
+          <label htmlFor="name">Faculty's Name:</label>
           <input
             type="text"
             id="name"
@@ -93,7 +92,7 @@ const Form = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="rollno">Student's Roll No:</label>
+          <label htmlFor="rollno">Faculty's Roll No:</label>
           <input
             type="text"
             id="rollno"
@@ -104,7 +103,7 @@ const Form = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="department">Student's Department:</label>
+          <label htmlFor="department">Faculty's Department:</label>
           <input
             type="text"
             id="department"
@@ -115,7 +114,7 @@ const Form = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phoneno">Student's Phone No:</label>
+          <label htmlFor="phoneno">Faculty's Phone No:</label>
           <input
             type="tel"
             id="phoneno"
@@ -126,7 +125,7 @@ const Form = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="photo">Student's ID Photo:</label>
+          <label htmlFor="photo">Faculty's ID Photo:</label>
           <input
             type="file"
             id="photo"
@@ -185,4 +184,5 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default FacultyForm;
+

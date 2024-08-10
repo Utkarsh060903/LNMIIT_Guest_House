@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Input, Button, Alert } from 'antd';
 import { Link } from 'react-router-dom';
-import './Register.css';
+import './FacultyRegister.css';
 import axios from 'axios';
 
-const emailPattern = /^(21|22|23|24|25)(|dcs|ucs|uec|dce|ume|ucc)[0-9]{3}@lnmiit\.ac\.in$/;
+const emailPattern = /^((21|22|23|24|25)(ucc|dcs|ucs|dce|uec|ume)[0-9]{3}|[a-zA-Z]+\.[a-zA-Z]+)@lnmiit\.ac\.in$/;
 
-const Register = () => {
+const FacultyRegister = () => {
   const [form] = Form.useForm();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -43,7 +43,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <h2 className="register-heading">Student Register</h2>
+      <h2 className="register-heading">Faculty Register</h2>
       {errorMessage && <Alert message={errorMessage} type="error" showIcon />}
       <Form form={form} name="register" onFinish={onFinish} className="register-form">
         <Form.Item
@@ -76,11 +76,11 @@ const Register = () => {
           </Button>
         </Form.Item>
         <div className="login-link">
-          Already have an account? <Link to="/login/student">Login here</Link>
+          Already have an account? <Link to="/login/faculty">Login here</Link>
         </div>
       </Form>
     </div>
   );
 };
 
-export default Register;
+export default FacultyRegister;

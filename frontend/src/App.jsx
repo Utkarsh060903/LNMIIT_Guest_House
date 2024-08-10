@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import { Route , Routes } from 'react-router-dom'
 import Home from './Pages/Home/Home'
@@ -8,6 +7,9 @@ import AboutUs from './Pages/AboutUs/AboutUs'
 import Login from './Components/Login/Login'
 import Register from './Components/Register/Register'
 import { UserProvider } from './UserContext'
+import FacultyForm from './Pages/FacultyForm/FacultyForm'
+import FacultyLogin from './Components/FacultyLogin/FacultyLogin'
+import FacultyRegister from './Components/FacultyRegister/FacultyRegister'
 
 const App = () => {
   return (
@@ -17,10 +19,13 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/form' element={<Form />} />
+        <Route path='/facultyform' element={<FacultyForm />} />
         <Route path='/availability' element={<Availability />} />
         <Route path='/aboutus' element={<AboutUs />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='/login/student' element={<Login />} />
+        <Route path='/register/student' element={<Register />} />
+        <Route path='/register/faculty' element={<FacultyRegister />}/>
+        <Route path='/login/faculty' element={<FacultyLogin />}/>
       </Routes>
     </div>
     </UserProvider>
