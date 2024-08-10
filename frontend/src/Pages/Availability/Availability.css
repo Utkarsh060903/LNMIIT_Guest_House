@@ -1,18 +1,12 @@
 .availability-container {
   width: 100%;
-  max-width: 100%;
+  /* max-width: 800px; */
   margin: 0 auto;
   padding: 20px;
-  background-color: #1F1F1F;
+  background-color: #f0f2f5;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
-
 /* Heading styling */
 .availability-heading {
   text-align: center;
@@ -25,7 +19,8 @@
 /* Calendar styling */
 .ant-picker-calendar {
   width: 100%;
-  max-width: 1200px; /* Adjust this value based on your preference */
+  max-width: 1600px; /* Increased max-width for larger calendar */
+  padding: 25px; /* Increased padding for better spacing */
   border-radius: 8px;
   background-color: #2b2b2b;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -42,13 +37,14 @@
 .events li {
   margin-bottom: 5px;
   color: #fff;
+  font-size: 18px; /* Increased font size for better readability */
 }
 
 /* Badge styling */
 .ant-badge-status {
-  padding: 4px 8px;
+  padding: 8px 12px; /* Increased padding for better visibility */
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 18px; /* Increased font size for better visibility */
   font-weight: bold;
 }
 
